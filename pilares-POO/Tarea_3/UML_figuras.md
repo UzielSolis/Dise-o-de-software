@@ -2,25 +2,25 @@
     classDiagram
         class Figura
         <<abstract>> Figura
-        Figura <|-- rectangulo
-        Figura <|-- triangulo
-        Figura <|-- circulo
+        Figura <|-- Rectangulo
+        Figura <|-- Triangulo
+        Figura <|-- Circulo
         Figura : perimetro()*
         Figura : area()*
-        class rectangulo {
+        class Rectangulo {
             +float base
             +float altura
             +perimetro()
             +area()
         }
-        class triangulo {
+        class Triangulo {
             +float base
             +float altura
             +perimetro()
             +area()
         }
-        class circulo {
-            -float PI
+        class Circulo {
+            +float Pi
             +float radio
             +perimetro()
             +area()
