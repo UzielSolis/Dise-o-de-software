@@ -11,7 +11,12 @@ class Transporte():
         else:
             raise ValueError('Motor no valido')
 
-        self.chofer = chofer
+        if chofer == 'robot':
+            self.chofer = Robot()
+        elif chofer == 'humano':
+            self.chofer = Humano()
+        else:
+            raise ValueError('Chofer no valido')
 
     def entregar(self, destino, carga) -> str:
         '''Entrega la carga en el destino'''
@@ -54,9 +59,7 @@ class Humano(Chofer):
         return 'Manejar Humano'
 
 # Ejemplo de uso
-chofer_1 = Humano()
-
-prius = Transporte('combustion', chofer_1)
+prius = Transporte('combustion', 'humano')
 print(prius.entregar('GDL', 'carro'))
 print(prius.motor.mover())
 print(prius.chofer.manejar())
