@@ -23,7 +23,7 @@ class Estructura(ABC):
     def descripcion(self, valor):
         self._descripcion = valor
 
-    def agregar_ingredientes(self, Ingrediente) -> None:
+    def agregar_ingrediente(self, Ingrediente) -> None:
         print(f"-I- Colocando {Ingrediente}...")
         self._ingredientes.append(Ingrediente)
 
@@ -54,19 +54,15 @@ class PizzeriaBuilder(ABC):
     def estructura(self):
         return self._estructura
 
-    @abstractmethod
     def preparar_masa(self) -> None:
         self.estructura.agregar_ingrediente("Masa")
 
-    @abstractmethod
     def agregar_salsa(self) -> None:
         self.estructura.agregar_ingrediente("Salsa")
 
-    @abstractmethod
     def agregar_queso(self) -> None:
         self.estructura.agregar_ingrediente("Queso")
 
-    @abstractmethod
     def agregar_ingrediente(self, ingrediente: str) -> None:
         self.estructura.agregar_ingrediente(f"{ingrediente}")
 
@@ -103,8 +99,8 @@ class Calzone(PizzeriaBuilder):
 # de los productos.
 class Pepperoni:
 
-    def __init__(self, constructor: PizzeriaBuilder) -> None:
-        self._constructor = constructor
+    def __init__(self) -> None:
+        self._producto = None
 
     @property
     def producto(self) -> PizzeriaBuilder:
@@ -118,27 +114,27 @@ class Pepperoni:
         print(f"-I- Preparando orden de{nombre_modelo}")
 
     def construirPizza(self) -> None:
-        self._constructor.preparar_masa()
-        self._constructor.agregar_salsa()
-        self._constructor.agregar_queso()
-        self._constructor.agregar_ingrediente("Pepperoni")
-        self._constructor.orilla_rellena("Queso")
+        self.producto.preparar_masa()
+        self.producto.agregar_salsa()
+        self.producto.agregar_queso()
+        self.producto.agregar_ingrediente("Pepperoni")
+        self.producto.orilla_rellena("Queso")
 
     def construirCalzone(self) -> None:
-        self._constructor.preparar_masa()
-        self._constructor.agregar_salsa()
-        self._constructor.agregar_queso()
-        self._constructor.agregar_ingrediente("Pepperoni")
-        self._constructor.cerrar_calzone()
+        self.producto.preparar_masa()
+        self.producto.agregar_salsa()
+        self.producto.agregar_queso()
+        self.producto.agregar_ingrediente("Pepperoni")
+        self.producto.cerrar_calzone()
 
     def obtener_estructura(self) -> Estructura:
-        return self._constructor.estructura
+        return self.producto.estructura
 
 
 class Hawaiana:
 
-    def __init__(self, constructor: PizzeriaBuilder) -> None:
-        self._constructor = constructor
+    def __init__(self) -> None:
+        self._producto = None
 
     @property
     def producto(self) -> PizzeriaBuilder:
@@ -152,25 +148,28 @@ class Hawaiana:
         print(f"-I- Preparando orden de{nombre_modelo}")
 
     def construirPizza(self) -> None:
-        self._constructor.preparar_masa()
-        self._constructor.agregar_salsa()
-        self._constructor.agregar_queso()
-        self._constructor.agregar_ingrediente("Piña")
-        self._constructor.agregar_ingrediente("Jamón")
-        self._constructor.orilla_rellena("Queso")
+        self.producto.preparar_masa()
+        self.producto.agregar_salsa()
+        self.producto.agregar_ingrediente("Piña")
+        self.producto.agregar_ingrediente("Jamón")
+        self.producto.orilla_rellena("Queso")
 
     def construirCalzone(self) -> None:
-        self._constructor.preparar_masa()
-        self._constructor.agregar_salsa()
-        self._constructor.agregar_queso()
-        self._constructor.agregar_ingrediente("Piña")
-        self._constructor.agregar_ingrediente("Jamón")
-        self._constructor.cerrar_calzone()
+        self.producto.preparar_masa()
+        self.producto.agregar_salsa()
+        self.producto.agregar_queso()
+        self.producto.agregar_ingrediente("Piña")
+        self.producto.agregar_ingrediente("Jamón")
+        self.producto.cerrar_calzone()
 
     def obtener_estructura(self) -> Estructura:
-        return self._constructor.estructura
+        return self.producto.estructura
 
 
 if __name__ == "__main__":
 
-    print("hola")
+    dominos = Pepperoni()
+
+    dominos.producto = Pizza(Pizza.FormaPizza.CIRCULAR)
+    dominos.construirPizza()
+    print(dominos.obtener_estructura())
